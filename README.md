@@ -2,7 +2,7 @@ DrEcho
 ======
 
 - Dr Echo to spice your terminal up. Written in C++11.
-- Dr Echo is MIT licensed.
+- Dr Echo is BOOST licensed.
 
 ### API
 

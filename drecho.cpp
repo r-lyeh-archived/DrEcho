@@ -1,5 +1,5 @@
 // DrEcho spices your terminal up
-// - rlyeh, mit licensed
+// - rlyeh, BOOST licensed
 
 // @todo optional DR_ASSERT on detected errors
 

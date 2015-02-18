@@ -27,8 +27,6 @@
 #include <set>
 #include <map>
 
-#include <omp.h>
-
 #if defined(__APPLE__)
 #   include <OpenGL/gl.h>
 #   include <OpenGL/glu.h>
@@ -60,13 +58,32 @@
 #   define $welse(...) __VA_ARGS__
 #endif
 
-#include <omp.h>
+#ifdef _MSC_VER
+#   define $msvc(...)  __VA_ARGS__
+#   define $melse(...) 
+#else
+#   define $msvc(...) 
+#   define $melse(...)  __VA_ARGS__
+#endif
 
+#ifdef _OPENMP
+#include <omp.h>
 namespace dr {
     double clock() {
         return omp_get_wtime();
     }
+    const double epoch = dr::clock();    
 }
+#else
+#include <chrono>
+namespace dr {
+    double clock() {
+        static const auto epoch = std::chrono::steady_clock::now(); 
+        return std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now() - epoch ).count() / 1000.0;
+    }
+    const double epoch = dr::clock();
+}
+#endif
 
 #define DR_CLOCK fmod( dr::clock() - dr::epoch, 10000. )
 #define DR_CLOCKs "%08.3fs"
@@ -336,7 +353,7 @@ namespace dr
             // 0xE8-0xFF:  grayscale from black to white in 24 steps
             if (color_code) fprintf(stdout, "\033[0;3%sm", color_code);
             num = vprintf(fmt, args);
-            printf("\033[m");
+            ::printf("%s","\033[m");
         )
 
         va_end(args);
@@ -351,8 +368,6 @@ namespace dr
 // -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8<
 
 namespace dr {
-
-    const double epoch = dr::clock();
 
     std::string &file() {
         static std::string st;
@@ -396,8 +411,8 @@ namespace dr {
         if( errno ) {
             err.resize( 2048 );
 
-            $win( strerror_s(&err[0], err.size(), errno) );
-            $welse( strerror_r(errno, &err[0], err.size()) );
+            $msvc( strerror_s(&err[0], err.size(), errno) );
+            $melse( strcpy(&err[0], strerror(errno) ) );
 
             err = std::string("(errno ") + to_string(errno) + ": " + err.c_str() + std::string(")");
         }

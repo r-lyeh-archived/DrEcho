@@ -1,4 +1,4 @@
-DrEcho <a href="https://travis-ci.org/r-lyeh/DrEcho"><img src="https://api.travis-ci.org/r-lyeh/DrEcho.svg?branch=master" align="right" /></a>
+DrEcho :pill: <a href="https://travis-ci.org/r-lyeh/DrEcho"><img src="https://api.travis-ci.org/r-lyeh/DrEcho.svg?branch=master" align="right" /></a>
 ======
 
 - Dr Echo to spice your terminal up. Written in C++11.

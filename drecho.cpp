@@ -386,13 +386,13 @@ namespace dr {
         return st;
     }
 
-	scope::scope() : clock(dr::clock()) {
+    scope::scope() : clock(dr::clock()) {
         prefix().push_back(' ');
-	}
-	scope::~scope() {
+    }
+    scope::~scope() {
         spent() = std::string("scoped for ") + to_string( dr::clock() - clock ) + "s";
         prefix().pop_back();
-	}
+    }
 }
 
 // -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8< -- 8<
@@ -419,12 +419,12 @@ namespace dr {
 
         if( DR_GLCONTEXT() ) {
             GLenum gl_code;
-			do {
-				gl_code = glGetError();
-				if( gl_code != GL_NO_ERROR ) {
-					gl += std::string("(glerrno ") + to_string(gl_code) + ": " + std::string((const char *)gluErrorString(gl_code)) + ")";
-	            }
-			} while( gl_code != GL_NO_ERROR );
+            do {
+                gl_code = glGetError();
+                if( gl_code != GL_NO_ERROR ) {
+                    gl += std::string("(glerrno ") + to_string(gl_code) + ": " + std::string((const char *)gluErrorString(gl_code)) + ")";
+                }
+            } while( gl_code != GL_NO_ERROR );
         }
 
         $win(

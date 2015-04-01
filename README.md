@@ -11,6 +11,14 @@ DrEcho :pill: <a href="https://travis-ci.org/r-lyeh/DrEcho"><img src="https://ap
 #include <iostream>
 #include "drecho.hpp"
 
+// default settings
+const bool dr::log_timestamp = true;
+const bool dr::log_branch = true;
+const bool dr::log_branch_scope = true;
+const bool dr::log_text = true;
+const bool dr::log_errno = true;
+const bool dr::log_location = true;
+
 int main(void) {
     // hello world, classic
     std::cout << "classic hello world" << std::endl;

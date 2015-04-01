@@ -544,31 +544,33 @@ namespace dr {
             // num lines to display in red
             if( !err.empty() ) num_errors += 1; //5
 
-            dr::printf( DR_WHITE_ALT, DR_CLOCKs " ", DR_CLOCK );
+            if( dr::log_timestamp ) {
+                dr::printf( DR_WHITE_ALT, DR_CLOCKs " ", DR_CLOCK );
+            }
 
             std::string prefix = dr::prefix();
             static int prevlvl = 0;
             int lvl = prefix.size(), last = lvl - 1;
             bool pushes = (lvl > prevlvl), pops = (lvl < prevlvl), same = (lvl == prevlvl);
-            dr::printf( DR_GRAY, "|" );
-            for( int i = 0; i < prefix.size(); i ++ ) {
-                int color = ( DR_GRAY + 1 + i ) % DR_TOTAL_COLORS;
-                /**/ if( lvl < prevlvl ) {
-                    dr::printf( color, i==last ? "/" : "|" );
-                } 
-                else if( lvl > prevlvl ) {
-                    dr::printf( color, i==last ? "\\" : "|" );
+            if( dr::log_branch ) {
+                dr::printf( DR_GRAY, "|" );
+                for( int i = 0; i < prefix.size(); i ++ ) {
+                    int color = ( DR_GRAY + 1 + i ) % DR_TOTAL_COLORS;
+                    /**/ if( lvl < prevlvl ) {
+                        dr::printf( color, i==last ? "/" : "|" );
+                    } 
+                    else if( lvl > prevlvl ) {
+                        dr::printf( color, i==last ? "\\" : "|" );
+                    }
+                    else {
+                        dr::printf( color, i==last ? "|" : "|" );
+                    }
                 }
-                else {
-                    dr::printf( color, i==last ? "|" : "|" );
-                }
+                prevlvl = lvl;
+                dr::printf( DR_DEFAULT, " " );
             }
-            prevlvl = lvl;
-            dr::printf( DR_DEFAULT, " " );
 
-            if( num_errors ) {
-                dr::printf( num_errors ? DR_RED : DR_DEFAULT, "%s", cache.c_str() );
-            } else {
+            if( dr::log_text ) {
                 std::vector<std::string> tags = split(lowercase(cache), "!\"#~$%&/(){}[]|,;.:<>+-/*@'\"\t\n\\ ");
                 for( auto &tag : tags ) {
                     auto find = dr::highlights.find(tag);
@@ -577,19 +579,25 @@ namespace dr {
                 }
             }
 
-            dr::printf( DR_RED, " %s", err.c_str() );
-
-            if( dr::file().size() ) {
-                dr::printf( DR_GRAY, " %s", dr::file().c_str() );
-                dr::file() = std::string();
+            if( dr::log_errno ) {
+                dr::printf( num_errors ? DR_RED : DR_DEFAULT, " %s", err.c_str() );
             }
 
-            if( pops ) {
-                dr::printf( DR_MAGENTA, " %s", spent().c_str() );
-                spent() = std::string();
+            if( dr::log_location ) {
+                if( dr::file().size() ) {
+                    dr::printf( DR_GRAY, " %s", dr::file().c_str() );
+                    dr::file() = std::string();
+                }                
             }
 
-            if( num_errors > 0 ) num_errors--;
+            if( dr::log_branch_scope ) {
+                if( pops ) {
+                    dr::printf( DR_MAGENTA, " %s", spent().c_str() );
+                    spent() = std::string();
+                }                
+            }
+
+            num_errors = 0;
             dr::clear_errors();
 
             fputs( "\n", stdout );

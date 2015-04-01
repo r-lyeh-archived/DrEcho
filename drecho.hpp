@@ -38,6 +38,16 @@ enum DR_COLOR {
 };
 
 namespace dr {
+
+    // app-defined boolean settings (default: true) {
+    extern const bool log_timestamp;
+    extern const bool log_branch;
+    extern const bool log_branch_scope;
+    extern const bool log_text;
+    extern const bool log_errno;
+    extern const bool log_location;
+    // }
+
     // api for high-level logging
     extern std::ostream &echo;
     bool capture( std::ostream &os = std::cout );

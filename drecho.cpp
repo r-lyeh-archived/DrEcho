@@ -464,7 +464,7 @@ namespace dr {
 
     namespace {
         std::set< std::ostream * > captured;
-        std::map< std::string, DR_COLOR > highlights;        
+        std::map< std::string, DR_COLOR > vhighlights;        
     }
 
     void logger( bool open, bool feed, bool close, const std::string &line );        
@@ -515,8 +515,16 @@ namespace dr {
 
     void highlight( DR_COLOR color, const std::vector<std::string> &user_highlights ) {
         for( auto &highlight : user_highlights ) {
-            dr::highlights[ lowercase(highlight) ] = color;
+            dr::vhighlights[ lowercase(highlight) ] = color;
         }
+    }
+
+    std::vector<std::string> highlights( DR_COLOR color ) {
+        std::vector<std::string> out;
+        for( auto &hl : dr::vhighlights ) {
+            if( hl.second == color ) out.push_back( hl.first );
+        }
+        return out;
     }
 
     std::string location( const std::string &func, const std::string &file, int line ) {
@@ -573,8 +581,8 @@ namespace dr {
             if( dr::log_text ) {
                 std::vector<std::string> tags = split(lowercase(cache), "!\"#~$%&/(){}[]|,;.:<>+-/*@'\"\t\n\\ ");
                 for( auto &tag : tags ) {
-                    auto find = dr::highlights.find(tag);
-                    int color = ( find == dr::highlights.end() ? DR_DEFAULT : find->second );
+                    auto find = dr::vhighlights.find(tag);
+                    int color = ( find == dr::vhighlights.end() ? DR_DEFAULT : find->second );
                     dr::print( color, tag );
                 }
             }

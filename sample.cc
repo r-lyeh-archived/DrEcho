@@ -32,14 +32,14 @@ int main(void) {
 
     // Showcase tree usage
     {
-        dr::tab sc;
+        dr::tab scope;
         std::cout << "this is branch #1" << std::endl;
         {
-            dr::tab sc;
+            dr::tab scope;
             std::cout << "this is branch #1.1" << std::endl;
             std::cout << "this is branch #1.2" << std::endl;
             {
-                dr::tab sc;
+                dr::tab scope;
                 std::cout << "this is branch #1.2.1" << std::endl;
                 std::cout << "this is branch #1.2.2" << std::endl;
             }

@@ -53,6 +53,7 @@ namespace dr {
     bool capture( std::ostream &os = std::cout );
     bool release( std::ostream &os = std::cout );
     void highlight( DR_COLOR color, const std::vector<std::string> &highlights );
+    std::vector<std::string> highlights( DR_COLOR color );
 
     // api for low-level printing
     int print( int color, const std::string &str );

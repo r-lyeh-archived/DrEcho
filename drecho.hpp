@@ -34,7 +34,10 @@ enum DR_COLOR {
     DR_DEFAULT = DR_NONE,
     DR_TOTAL_COLORS = DR_NONE,
 
-    DR_BLACK
+    DR_BLACK,
+
+    DR_PURPLE = DR_MAGENTA,
+    DR_PURPLE_ALT = DR_MAGENTA_ALT
 };
 
 namespace dr {

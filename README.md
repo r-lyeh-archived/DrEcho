@@ -3,7 +3,7 @@ DrEcho :pill: <a href="https://travis-ci.org/r-lyeh/DrEcho"><img src="https://ap
 
 - Dr Echo to spice your terminal up. Written in C++11.
 - Dr Echo is cross-platform.
-- Dr Echo is BOOST licensed.
+- Dr Echo is zlib/libpng licensed.
 
 ### API
 

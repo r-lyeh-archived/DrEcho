@@ -1,5 +1,5 @@
 // DrEcho spices your terminal up
-// - rlyeh, BOOST licensed
+// - rlyeh, zlib/libpng licensed.
 
 // @todo : see drecho.cpp
 
@@ -60,7 +60,7 @@ namespace dr {
 
     // api for low-level printing
     int print( int color, const std::string &str );
-    int printf( int color, const char *str, ... );  
+    int printf( int color, const char *str, ... );
 
     // api for errors
     std::string get_any_error();
@@ -68,7 +68,7 @@ namespace dr {
 
     // api for time
     double clock();
-    
+
     // api for scopes
     struct scope {
          scope(/*attribs: tab, time, color*/);
@@ -80,7 +80,7 @@ namespace dr {
 
     // helper classes and utilities
     struct concat : public std::stringstream {
-        template <typename T> concat & operator,(const T & val) { 
+        template <typename T> concat & operator,(const T & val) {
             *this << val;
             return *this;
         }

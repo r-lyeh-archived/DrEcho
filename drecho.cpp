@@ -1,5 +1,5 @@
 // DrEcho spices your terminal up
-// - rlyeh, BOOST licensed
+// - rlyeh, zlib/libpng licensed.
 
 // @todo optional DR_ASSERT on detected errors
 
@@ -54,15 +54,15 @@
 #else
 #   include <unistd.h>
 #   include <sys/ioctl.h>
-#   define $win(...) 
+#   define $win(...)
 #   define $welse(...) __VA_ARGS__
 #endif
 
 #ifdef _MSC_VER
 #   define $msvc(...)  __VA_ARGS__
-#   define $melse(...) 
+#   define $melse(...)
 #else
-#   define $msvc(...) 
+#   define $msvc(...)
 #   define $melse(...)  __VA_ARGS__
 #endif
 
@@ -72,13 +72,13 @@ namespace dr {
     double clock() {
         return omp_get_wtime();
     }
-    const double epoch = dr::clock();    
+    const double epoch = dr::clock();
 }
 #else
 #include <chrono>
 namespace dr {
     double clock() {
-        static const auto epoch = std::chrono::steady_clock::now(); 
+        static const auto epoch = std::chrono::steady_clock::now();
         return std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now() - epoch ).count() / 1000.0;
     }
     const double epoch = dr::clock();
@@ -116,7 +116,7 @@ namespace
             case DR_WHITE:       return $welse("37")  $win(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
             $welse( default: case DR_DEFAULT: )
-            case DR_GRAY:        return $welse("90")  $win(FOREGROUND_INTENSITY); 
+            case DR_GRAY:        return $welse("90")  $win(FOREGROUND_INTENSITY);
             case DR_RED_ALT:     return $welse("91")  $win(FOREGROUND_RED);
             case DR_GREEN_ALT:   return $welse("92")  $win(FOREGROUND_GREEN);
             case DR_YELLOW_ALT:  return $welse("93")  $win(FOREGROUND_RED | FOREGROUND_GREEN);
@@ -134,10 +134,10 @@ namespace
     }
 }
 
-namespace 
+namespace
 {
     // excerpt from https://github.com/r-lyeh/apathy library following
-    namespace apathy 
+    namespace apathy
     {
         std::deque<std::string> split( const std::string &str, char sep )
         {
@@ -358,7 +358,7 @@ namespace dr
 
         va_end(args);
         return num;
-    }   
+    }
 
     int print( int color, const std::string &str ) {
         return dr::printf( color, "%s", str.c_str() );
@@ -449,7 +449,7 @@ namespace dr {
                 }
 
                 if( buflen ) {
-                    LocalFree( lpMsgBuf );            
+                    LocalFree( lpMsgBuf );
                 }
             }
         )
@@ -464,10 +464,10 @@ namespace dr {
 
     namespace {
         std::set< std::ostream * > captured;
-        std::map< std::string, DR_COLOR > vhighlights;        
+        std::map< std::string, DR_COLOR > vhighlights;
     }
 
-    void logger( bool open, bool feed, bool close, const std::string &line );        
+    void logger( bool open, bool feed, bool close, const std::string &line );
 
     bool capture( std::ostream &os_ ) {
         std::ostream *os = &os_;
@@ -511,7 +511,7 @@ namespace dr {
             } else str += ch;
         }
         return str.empty() ? tokens : ( tokens.push_back( str ), tokens );
-    }    
+    }
 
     void highlight( DR_COLOR color, const std::vector<std::string> &user_highlights ) {
         for( auto &highlight : user_highlights ) {
@@ -566,7 +566,7 @@ namespace dr {
                     int color = ( DR_GRAY + 1 + i ) % DR_TOTAL_COLORS;
                     /**/ if( lvl < prevlvl ) {
                         dr::printf( color, i==last ? "/" : "|" );
-                    } 
+                    }
                     else if( lvl > prevlvl ) {
                         dr::printf( color, i==last ? "\\" : "|" );
                     }
@@ -595,14 +595,14 @@ namespace dr {
                 if( dr::file().size() ) {
                     dr::printf( DR_GRAY, " %s", dr::file().c_str() );
                     dr::file() = std::string();
-                }                
+                }
             }
 
             if( dr::log_branch_scope ) {
                 if( pops ) {
                     dr::printf( DR_MAGENTA, " %s", spent().c_str() );
                     spent() = std::string();
-                }                
+                }
             }
 
             num_errors = 0;

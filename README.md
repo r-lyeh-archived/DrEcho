@@ -67,3 +67,6 @@ int main(void) {
 ### Possible output
 
 ![image](https://raw.github.com/r-lyeh/depot/master/drecho.png)
+
+### Changelog
+- v1.0.0 (2016/04/11): Initial semantic versioning adherence

@@ -134,7 +134,7 @@ namespace
     }
 }
 
-namespace
+namespace dr
 {
     // excerpt from https://github.com/r-lyeh/apathy library following
     namespace apathy
@@ -627,3 +627,6 @@ namespace dr {
 
 #undef $welse
 #undef $win
+
+#undef $msvc
+#undef $melse

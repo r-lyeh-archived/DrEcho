@@ -11,6 +11,8 @@
 #include <sstream>
 #include <iostream>
 
+#define DRECHO_VERSION "1.0.0" // (2016/04/11): Initial semantic versioning adherence
+
 // DR API
 
 enum DR_COLOR {
